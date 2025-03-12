@@ -1,0 +1,157 @@
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&display=swap");
+
+:root {
+	--color-gray-button: #eeeeee;
+	--color-gray: #e6e6e6;
+	--color-gray-border: #c9c9c9;
+	--color-gray-button-border: #bcbcbc;
+	--color-dark-gray: #dedede;
+	--color-light-gray: #f3f3f3;
+}
+
+body {
+	font-family: "Heebo", sans-serif;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	direction: rtl;
+	height: 100vh;
+	display: flex;
+	margin: 0;
+}
+
+* {
+	transition: 0.2s all;
+}
+
+table {
+	font-size: 1.5em;
+	border-spacing: 0;
+}
+
+.hide-vertical {
+	opacity: 0 !important;
+	translate: 0 -10px !important;
+}
+
+.hide-horizontal {
+	opacity: 0 !important;
+	translate: -10px !important;
+}
+
+.button {
+	font-family: "Heebo", sans-serif;
+	background-color: black;
+	color: white;
+	border-radius: 25px;
+	pointer-events: all;
+	user-select: none;
+	font-size: 1rem;
+	padding: 10px;
+	outline: none;
+	border: none;
+	opacity: 1;
+}
+
+.button:hover {
+	cursor: pointer;
+	background-color: #333333;
+}
+
+.disabled {
+	pointer-events: none;
+	opacity: 0.3;
+}
+
+.cell-button {
+	cursor: pointer;
+	padding: 8px;
+	border: none;
+	font-size: 1.3rem;
+	background: unset;
+	width: 100%;
+	margin: 0;
+	height: 100%;
+	border-radius: 10px;
+}
+
+.cell-button:hover {
+	box-shadow:
+		0 2px 0 white inset,
+		0 -2px 0 rgba(0, 0, 0, 0.2) inset;
+	background: var(--color-light-gray);
+}
+
+.cell-button:active {
+	scale: 0.95;
+}
+
+.skeleton {
+	height: 20px;
+	margin: 10px;
+	background-color: var(--color-gray);
+	border-radius: 20px;
+	will-change: background-position;
+	animation: skeleton 1.8s ease-in-out infinite;
+	background-image: linear-gradient(
+		105deg,
+		transparent 0%,
+		transparent 40%,
+		white 50%,
+		transparent 60%,
+		transparent 100%
+	);
+	background-size: 200% auto;
+}
+
+.link,
+a {
+	user-select: none;
+	outline: none;
+	padding: 10px;
+	width: 100%;
+	text-align: center;
+	border-radius: 25px;
+	background-color: transparent;
+	border: 2px solid var(--color-gray-button-border);
+	font-size: 1rem;
+	text-decoration: none;
+	color: black;
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+	align-items: center;
+}
+
+.link:hover,
+a:hover {
+	cursor: pointer;
+	border: 2px solid rgb(121, 121, 121);
+}
+
+/* .tooltip {
+	white-space: nowrap;
+	position: relative;
+}
+
+#tooltip {
+	position: absolute;
+	bottom: 100%;
+	margin-bottom: 5px;
+	padding: 5px 20px;
+	background-color: var(--color-gray);
+	font-size: 0.8em;
+	border-radius: 9999px;
+	color: black;
+	border: 1px solid var(--color-gray-border);
+	width: max-content;
+} */
+
+@keyframes skeleton {
+	from {
+		background-position: 150%;
+	}
+	to {
+		background-position: -50%;
+	}
+}
