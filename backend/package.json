@@ -1,0 +1,12 @@
+{
+	"name": "backend2",
+	"module": "index.ts",
+	"type": "module",
+	"devDependencies": {
+		"@types/bun": "latest",
+		"prettier": "3.3.3"
+	},
+	"peerDependencies": {
+		"typescript": "^5.6.3"
+	}
+}
