@@ -21,13 +21,6 @@ db.exec(`
     );
 `);
 
-// db.query(
-// 	`INSERT INTO users (username, displayname, hedisplayname, password) VALUES (?, ?, ?, ?)`
-// ).run("dror.keren7", "Dror Keren", "דרור קרן", await Bun.password.hash("re9yuy"));
-// db.query(
-// 	`INSERT INTO users (username, displayname, hedisplayname, password) VALUES (?, ?, ?, ?)`
-// ).run("yaardreamer", "Yaar Dreamer", "יער דרימר", await Bun.password.hash("NightmareHelpy234"));
-
 type User = {
 	username: string;
 	displayname: string;
