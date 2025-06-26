@@ -17,7 +17,7 @@
 <style>
 	input {
 		direction: rtl;
-		font-family: "Noto Sans Hebrew", sans-serif;
+		font-family: "Heebo", sans-serif;
 		outline: none;
 		border-radius: 25px;
 		padding: 10px;

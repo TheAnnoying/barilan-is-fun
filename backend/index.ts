@@ -56,6 +56,26 @@ const server = Bun.serve({
 	static: {
 		"/question_list": Response.json(await Bun.file("question_list.json").json(), CORS_HEADERS)
 	},
+	// routes: {
+	// 	// "/login/:username/:password": async req => {
+	// 	// 	const user: User = db
+	// 	// 		.query("SELECT * FROM users WHERE username = $username")
+	// 	// 		.get({ $username: req.params.username });
+	// 	// 	const authenticated = await Bun.password.verify(req.params.password, user.password);
+	// 	// 	if(authenticated) {
+	// 	// 		return Response.json(
+	// 	// 			{
+	// 	// 				okay: true,
+	// 	// 				username: user.username,
+	// 	// 				displayname: user.displayname,
+	// 	// 				hedisplayname: user.hedisplayname
+	// 	// 			},
+	// 	// 			CORS_HEADERS
+	// 	// 		);
+	// 	// 	}
+	// 	// },
+	// 	// "/mark/:pages/:question/:username/:password"
+	// },
 	async fetch(req, server) {
 		const success = server.upgrade(req);
 		if (success) return undefined;

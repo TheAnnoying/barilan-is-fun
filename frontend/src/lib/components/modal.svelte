@@ -40,7 +40,7 @@
 <style>
 	dialog {
 		border: none;
-		width: 25%;
+		width: 300px;
 		position: relative;
 		border-radius: 20px;
 		border: 4px solid var(--color-gray-border);
@@ -49,7 +49,7 @@
 	}
 
 	dialog::backdrop {
-		background-color: unset;
+		background-color: rgba(0, 0, 0, 0.4);
 	}
 
 	.close {
@@ -67,6 +67,10 @@
 		background-color: var(--color-light-gray);
 	}
 
+	.close:focus {
+		outline: 0;
+	}
+
 	#content {
 		height: calc(100% - 87px);
 		margin: 30px;
@@ -74,17 +78,5 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-	}
-
-	@media (max-width: 1085px) {
-		dialog {
-			width: 100%;
-			padding: 0;
-			height: 100%;
-		}
-
-		dialog #content {
-			justify-content: space-between;
-		}
 	}
 </style>

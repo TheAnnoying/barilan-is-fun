@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Modal from "./modal.svelte";
-	import { tooltip } from "@svelte-plugins/tooltips";
 	import confetti from "canvas-confetti";
 	import { fly } from "svelte/transition";
 	import {
@@ -12,35 +11,33 @@
 		getNextMonday
 	} from "$lib";
 	import { expoOut } from "svelte/easing";
+	import { CheckCheck } from "lucide-svelte";
+
+	let { index = 0 } = $props();
 </script>
 
 {#if $questionList.length > 0}
-	{@const maxQuestions = $questionList
+	{@const maxQuestions = Math.max(4, $questionList[index]
 		.flatMap(e => e[1])
-		.reduce((a, e) => Math.max(a, e.questions.length), 0)}
+		.reduce((a, e) => Math.max(a, e.questions.length), 0))}
 	<table cellspacing="0" cellpadding="5" in:fly={{ duration: 500, y: 10, easing: expoOut }}>
 		<tbody>
 			<tr style="background-color: var(--color-light-gray);">
 				<td style="text-align: center;" colspan={maxQuestions + 2}>שיעורי בית</td>
 			</tr>
 			<tr>
-				<td colspan={Math.floor((maxQuestions + 2) / 4)}>שם משפחה</td>
-				<td colspan={Math.ceil((maxQuestions + 2) / 4)}
-					>{localStorage.get("hedisplayname")?.split(" ")[1]}</td
-				>
-				<td colspan={Math.floor((maxQuestions + 2) / 4)}>שם פרטי</td>
-				<td colspan={Math.ceil((maxQuestions + 2) / 4)}
-					>{localStorage.get("hedisplayname").split(" ")[0]}</td
-				>
+				<td colspan={(maxQuestions + 2) / 4}>שם משפחה</td>
+				<td colspan={(maxQuestions + 2) / 4}>{localStorage.get("hedisplayname")?.split(" ")[1]}</td>
+				<td colspan={(maxQuestions + 2) / 2}>שם פרטי</td>
+				<td colspan={(maxQuestions + 2) / 2}>{localStorage.get("hedisplayname").split(" ")[0]}</td>
 			</tr>
 			<tr>
-				<td colspan={Math.floor((maxQuestions + 2) / 4)}>תאריך הגשה</td>
-				<td colspan={Math.ceil((maxQuestions + 2) / 4)} contenteditable="true">{getNextMonday()}</td
-				>
-				<td colspan={Math.floor((maxQuestions + 2) / 4)}>כמה זמן לקח לי</td>
-				<td colspan={Math.ceil((maxQuestions + 2) / 4)} contenteditable="true"></td>
+				<td colspan={(maxQuestions + 2) / 4}>תאריך הגשה</td>
+				<td colspan={(maxQuestions + 2) / 4} contenteditable="true">{getNextMonday()}</td>
+				<td colspan={(maxQuestions + 2) / 2}>כמה זמן לקח לי</td>
+				<td colspan={(maxQuestions + 2) / 2} contenteditable="true"></td>
 			</tr>
-			{#each $questionList as table}
+			{#each $questionList[index] as table}
 				<tr style="background-color: var(--color-light-gray);">
 					<td style="text-align: center;" colspan={maxQuestions + 2}>{table[0]}</td>
 				</tr>
@@ -56,10 +53,18 @@
 						{#each { length: maxQuestions } as _, i}
 							{@const question = section.questions[i]}
 							{#if question}
+								{@const solverList =
+									$questionCompleters
+										.find(
+											e =>
+												e.pages === section.pages &&
+												e.question === parseInt(question)
+										)
+										?.completed_users.split(",") ?? []}
 								<td>
 									<Modal>
 										{#snippet target()}
-											<span>{question.question}</span>
+											<span class={solverList.includes(localStorage.get('displayname')) ? "solved" : ""}>{question}</span>
 										{/snippet}
 										<div id="info">
 											<span id="subtext"
@@ -67,19 +72,11 @@
 												{section.pages}</span
 											>
 											<h1 id="title">
-												שאלה {question.question}
+												שאלה {question}
 											</h1>
 										</div>
 										<div id="actions" in:fly={{ y: 10, duration: 200, delay: 100 }}>
 											{#if $questionCompleters}
-												{@const solverList =
-													$questionCompleters
-														.find(
-															e =>
-																e.pages === section.pages &&
-																e.question === parseInt(question.question)
-														)
-														?.completed_users.split(",") ?? []}
 												{#if solverList.length > 0}
 													<div
 														id="avatars"
@@ -87,7 +84,6 @@
 													>
 														{#each solverList as name}
 															<div
-																use:tooltip={{ content: name }}
 																class="avatar"
 																style="background-color: {textToColor(name)};"
 															>
@@ -103,9 +99,9 @@
 													class="action button {solverList.includes(localStorage.get('displayname'))
 														? 'disabled'
 														: ''}"
-													on:click={() => {
+													onclick={() => {
 														setTimeout(() => {
-															markAnswered(section.pages, question.question);
+															markAnswered(section.pages, question);
 															confetti({
 																particleCount: 50,
 																angle: 60,
@@ -123,7 +119,8 @@
 																}
 															});
 														}, 250);
-													}}>סיימתי</button
+													}}> <CheckCheck />
+													סיימתי</button
 												>
 											{/if}
 										</div>
@@ -248,11 +245,5 @@
 
 	.action {
 		width: 100%;
-	}
-
-	@media (max-width: 370px) {
-		#additionals {
-			flex-wrap: wrap;
-		}
 	}
 </style>

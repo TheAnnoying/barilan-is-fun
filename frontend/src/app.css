@@ -29,16 +29,6 @@ table {
 	border-spacing: 0;
 }
 
-.hide-vertical {
-	opacity: 0 !important;
-	translate: 0 -10px !important;
-}
-
-.hide-horizontal {
-	opacity: 0 !important;
-	translate: -10px !important;
-}
-
 .button {
 	font-family: "Heebo", sans-serif;
 	background-color: black;
@@ -46,6 +36,9 @@ table {
 	border-radius: 25px;
 	pointer-events: all;
 	user-select: none;
+	display: flex;
+	justify-content: center;
+	gap: 7px;
 	font-size: 1rem;
 	padding: 10px;
 	outline: none;
@@ -68,14 +61,25 @@ table {
 	padding: 8px;
 	border: none;
 	font-size: 1.3rem;
-	background: unset;
+	background-color: unset;
 	width: 100%;
 	margin: 0;
 	height: 100%;
 	border-radius: 10px;
 }
 
-.cell-button:hover {
+.cell-button:focus {
+	outline: 0;
+}
+
+.cell-button:has(.solved) {
+	background-color: lightgreen;
+	box-shadow:
+		0 2px 0 white inset,
+		0 -2px 0 rgba(0, 0, 0, 0.2) inset;
+}
+
+.cell-button:hover:not(:has(.solved)) {
 	box-shadow:
 		0 2px 0 white inset,
 		0 -2px 0 rgba(0, 0, 0, 0.2) inset;
@@ -128,24 +132,6 @@ a:hover {
 	cursor: pointer;
 	border: 2px solid rgb(121, 121, 121);
 }
-
-/* .tooltip {
-	white-space: nowrap;
-	position: relative;
-}
-
-#tooltip {
-	position: absolute;
-	bottom: 100%;
-	margin-bottom: 5px;
-	padding: 5px 20px;
-	background-color: var(--color-gray);
-	font-size: 0.8em;
-	border-radius: 9999px;
-	color: black;
-	border: 1px solid var(--color-gray-border);
-	width: max-content;
-} */
 
 @keyframes skeleton {
 	from {
